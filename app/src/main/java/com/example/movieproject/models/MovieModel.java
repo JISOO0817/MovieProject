@@ -7,6 +7,9 @@ public class MovieModel implements Parcelable {
 
     //Model Class for our movies
 
+
+    //유저가 무비 아이템을 클릭했을 때 다른 액티비티로 패스 해주기 위해 Parcelable 이용
+
     private String title;
     private String poster_path;
     private String release_date;
