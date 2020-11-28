@@ -10,7 +10,7 @@ public class MovieResponse {
     //1 1- Finding the Movie Object
 
     @SerializedName("results")
-    @Expose
+    @Expose()
     private MovieModel movie;
 
     public MovieModel getMovie(){

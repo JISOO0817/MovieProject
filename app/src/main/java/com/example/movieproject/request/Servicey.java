@@ -15,8 +15,10 @@ public class Servicey {
             .addConverterFactory(GsonConverterFactory.create());
 
 
+    //싱글톤 패턴
     private static Retrofit retrofit = retrofitBuilder.build();
 
+    //사용할 api
     private static MovieApi movieApi = retrofit.create(MovieApi.class);
 
     public static MovieApi getMovieApi(){

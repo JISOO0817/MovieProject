@@ -1,6 +1,9 @@
 package com.example.movieproject;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +15,7 @@ import com.example.movieproject.request.Servicey;
 import com.example.movieproject.response.MovieSearchResponse;
 import com.example.movieproject.utils.Credentials;
 import com.example.movieproject.utils.MovieApi;
+import com.example.movieproject.viewmodels.MovieListViewModel;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -25,23 +29,35 @@ public class MovieListActivity extends AppCompatActivity {
 
     Button btn;
 
+    // ViewModel
+    private MovieListViewModel movieListViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
         btn = findViewById(R.id.button);
 
+        movieListViewModel = new ViewModelProvider(this).get(MovieListViewModel.class);
 
-        btn.setOnClickListener(new View.OnClickListener() {
+
+
+
+
+    }
+
+    // Observing any data change
+    private void ObserveAnyChange(){
+
+        movieListViewModel.getMovies().observe(this, new Observer<List<MovieModel>>() {
             @Override
-            public void onClick(View v) {
-                GetRetrofitResponse();
-                Log.v("Tag","Asdf");
+            public void onChanged(List<MovieModel> movieModels) {
+                // Observing for any data change
             }
         });
+
     }
+
 
     private void GetRetrofitResponse() {
 
@@ -85,4 +101,37 @@ public class MovieListActivity extends AppCompatActivity {
 
 
     }
+
+    private void GetRetrofitResponseAccordingToId(){
+
+        MovieApi movieApi = Servicey.getMovieApi();
+        Call<MovieModel> responseCall = movieApi.getMovie(
+                550,Credentials.API_KEY);
+
+        responseCall.enqueue(new Callback<MovieModel>() {
+            @Override
+            public void onResponse(Call<MovieModel> call, Response<MovieModel> response) {
+
+                if(response.code() == 200){
+                      MovieModel movie = response.body();
+                      Log.v("Tag","The Response " + movie.getTitle());
+                }else{
+
+                    try{
+                        Log.v("Tag","Error " + response.errorBody().string());
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MovieModel> call, Throwable t) {
+
+            }
+        });
+    }
+
 }
+
+

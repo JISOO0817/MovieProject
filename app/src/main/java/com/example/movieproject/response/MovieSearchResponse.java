@@ -10,12 +10,12 @@ import java.util.List;
 public class MovieSearchResponse {
 
     @SerializedName("total_results")
-    @Expose
+    @Expose()
     private int total_count;
 
 
     @SerializedName("results")
-    @Expose
+    @Expose()
     private List<MovieModel> movies;
 
 
