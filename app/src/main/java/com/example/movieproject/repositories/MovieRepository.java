@@ -38,4 +38,14 @@ public class MovieRepository {
         return movieApiClient.getMovies();
     }
 
+
+
+    //Calling the method in repository
+    public void searchMovieApi(String query, int pageNumber){
+
+        movieApiClient.searchMoviesApi(query, pageNumber);
+    }
+
 }
+
+

@@ -27,6 +27,11 @@ import retrofit2.Response;
 
 public class MovieListActivity extends AppCompatActivity {
 
+
+    //Before we run our app, we need to add the Network Security.
+
+
+
     Button btn;
 
     // ViewModel
@@ -41,6 +46,22 @@ public class MovieListActivity extends AppCompatActivity {
         movieListViewModel = new ViewModelProvider(this).get(MovieListViewModel.class);
 
 
+        //Calling the observers
+
+        ObserveAnyChange();
+
+        //Testing the Method
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //Displaying only the results of page 1
+
+
+                searchMovieApi("Fast",1);
+            }
+        });
 
 
 
@@ -53,9 +74,23 @@ public class MovieListActivity extends AppCompatActivity {
             @Override
             public void onChanged(List<MovieModel> movieModels) {
                 // Observing for any data change
+
+                if(movieModels != null){
+                    for(MovieModel movieModel:movieModels){
+                        // Get the data in log
+                        Log.v("Tag","onChanged:" + movieModel.getTitle());
+                    }
+                }
             }
         });
 
+    }
+
+
+    //Calling method in Main Activity
+
+    private void searchMovieApi(String query, int pageNumber){
+        movieListViewModel.searchMovieApi(query, pageNumber);
     }
 
 

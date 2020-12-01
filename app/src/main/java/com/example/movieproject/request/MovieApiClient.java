@@ -50,6 +50,7 @@ public class MovieApiClient {
     }
 
 
+    //
     public void searchMoviesApi(String query, int pageNumber){
 
         if(retrieveMoviesRunnable != null){
@@ -67,7 +68,7 @@ public class MovieApiClient {
                 myHandler.cancel(true);
                 //Cancelling the retrofit call
             }
-        },5000, TimeUnit.MICROSECONDS);
+        },3000, TimeUnit.MILLISECONDS);
     }
 
     //Retreving data from RESTAPI by runnable class
