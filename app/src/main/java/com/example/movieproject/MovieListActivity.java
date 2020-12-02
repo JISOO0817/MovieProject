@@ -1,15 +1,21 @@
 package com.example.movieproject;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+
+import com.example.movieproject.adapters.MovieAdapter;
 import com.example.movieproject.models.MovieModel;
 import com.example.movieproject.request.Servicey;
 import com.example.movieproject.response.MovieSearchResponse;
@@ -32,7 +38,10 @@ public class MovieListActivity extends AppCompatActivity {
 
 
 
-    Button btn;
+    private RecyclerView recyclerView;
+    private MovieAdapter adapter;
+    private SearchView searchView;
+
 
     // ViewModel
     private MovieListViewModel movieListViewModel;
@@ -41,29 +50,49 @@ public class MovieListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        btn = findViewById(R.id.button);
 
+        searchView = findViewById(R.id.searchView);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        SetupSearchView();
+        recyclerView = findViewById(R.id.recyclerView);
         movieListViewModel = new ViewModelProvider(this).get(MovieListViewModel.class);
 
+        ConfigureRecyclerView();
 
         //Calling the observers
 
         ObserveAnyChange();
 
-        //Testing the Method
 
-        btn.setOnClickListener(new View.OnClickListener() {
+
+
+
+    }
+
+
+    //Get data from searchview & query the api to get the results (Movies)
+    private void SetupSearchView() {
+
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public void onClick(View v) {
+            public boolean onQueryTextSubmit(String query) {
 
-                //Displaying only the results of page 1
+                movieListViewModel.searchMovieApi(
+                        //The search string getted from searchview
+                        query,
+                        1
+                );
+                return false;
+            }
 
-
-                searchMovieApi("Fast",1);
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
             }
         });
-
-
 
     }
 
@@ -79,18 +108,12 @@ public class MovieListActivity extends AppCompatActivity {
                     for(MovieModel movieModel:movieModels){
                         // Get the data in log
                         Log.v("Tag","onChanged:" + movieModel.getTitle());
+                        adapter.setmMovie(movieModels);
                     }
                 }
             }
         });
 
-    }
-
-
-    //Calling method in Main Activity
-
-    private void searchMovieApi(String query, int pageNumber){
-        movieListViewModel.searchMovieApi(query, pageNumber);
     }
 
 
@@ -165,6 +188,20 @@ public class MovieListActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+
+    // Intializing recyclerView & adding data to it
+    private void ConfigureRecyclerView(){
+
+        //Live data cant be passed via the constructer
+        adapter = new MovieAdapter(this);
+
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+
+
     }
 
 }

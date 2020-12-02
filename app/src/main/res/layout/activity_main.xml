@@ -7,13 +7,43 @@
     tools:context=".MovieListActivity">
 
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
+   <!-- add the toolbar -->
+
+
+   <androidx.appcompat.widget.Toolbar
+       android:id="@+id/toolbar"
+       android:layout_width="match_parent"
+       android:layout_height="?attr/actionBarSize"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="parent"
+       app:layout_scrollFlags="scroll|enterAlways"
+       app:theme="@style/ThemeOverlay.AppCompat.Light"
+
+       app:popupTheme="@style/ThemeOverlay.AppCompat.Dark">
+      
+      <androidx.appcompat.widget.SearchView
+          android:layout_width="match_parent"
+          android:layout_height="?attr/actionBarSize"
+          android:id="@+id/searchView"
+          app:queryHint="찾는 영화가 있으신가요?"
+          tools:ignore="MissingConstraints" />
+
+   </androidx.appcompat.widget.Toolbar>
+
+   <!-- scroll|enterAlways 위로 다올림-->
+
+
+
+
+
+   <androidx.recyclerview.widget.RecyclerView
+       android:id="@+id/recyclerView"
+       android:layout_width="match_parent"
+       android:layout_height="0dp"
+       app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/toolbar"
+       app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
