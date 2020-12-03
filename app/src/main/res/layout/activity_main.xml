@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,11 +8,25 @@
 
 
 
+   <TextView
+      android:layout_marginTop="30dp"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+      android:textSize="30sp"
+      android:textStyle="bold"
+       android:gravity="center"
+      android:id="@+id/tv"
+      android:text="오늘의 영화를 골라보세요."/>
+
+
+
    <!-- add the toolbar -->
 
 
    <androidx.appcompat.widget.Toolbar
+       android:layout_below="@+id/tv"
        android:id="@+id/toolbar"
+       android:layout_marginTop="20dp"
        android:layout_width="match_parent"
        android:layout_height="?attr/actionBarSize"
        app:layout_constraintEnd_toEndOf="parent"
@@ -22,7 +36,7 @@
        app:theme="@style/ThemeOverlay.AppCompat.Light"
 
        app:popupTheme="@style/ThemeOverlay.AppCompat.Dark">
-      
+
       <androidx.appcompat.widget.SearchView
           android:layout_width="match_parent"
           android:layout_height="?attr/actionBarSize"
@@ -37,13 +51,14 @@
 
 
 
-
    <androidx.recyclerview.widget.RecyclerView
+       android:layout_below="@+id/toolbar"
+       android:layout_marginTop="40dp"
        android:id="@+id/recyclerView"
        android:layout_width="match_parent"
-       android:layout_height="0dp"
+       android:layout_height="match_parent"
        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
        app:layout_constraintEnd_toEndOf="parent"
        app:layout_constraintTop_toBottomOf="@+id/toolbar"
        app:layout_constraintBottom_toBottomOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

@@ -1,5 +1,6 @@
 package com.example.movieproject;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
@@ -198,8 +199,26 @@ public class MovieListActivity extends AppCompatActivity {
         adapter = new MovieAdapter(this);
 
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
 
+
+
+
+        //RecyclerView Pagination
+        // Loading next page of opi response
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+               if(!recyclerView.canScrollVertically(1)){
+
+                   // Here we need to display the next search result on the next page of api
+
+                    movieListViewModel.searchNextpage();
+
+               }
+            }
+        });
 
 
     }

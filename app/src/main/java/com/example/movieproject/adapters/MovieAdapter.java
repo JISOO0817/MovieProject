@@ -49,10 +49,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         float vote_average = movieModel.getVote_average();
         String poster_path = movieModel.getPoster_path();
 
-        holder.title.setText(title);
-        holder.runtime.setText(original_language);
-        holder.release_date.setText(release_date);
-        holder.ratingBar.setRating(vote_average/2);
+  //      holder.title.setText(title);
+   //     holder.runtime.setText(original_language);
+  //      holder.release_date.setText(release_date);
+  //      holder.ratingBar.setRating(vote_average/2);
 
 
         Glide.with(holder.itemView.getContext()).load("https://image.tmdb.org/t/p/w500/"+poster_path).into(holder.image);
@@ -88,11 +88,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            title = itemView.findViewById(R.id.movie_title);
-            runtime = itemView.findViewById(R.id.movie_duration);
-            release_date = itemView.findViewById(R.id.movie_category);
+//            title = itemView.findViewById(R.id.movie_title);
+ //           runtime = itemView.findViewById(R.id.movie_duration);
+ //           release_date = itemView.findViewById(R.id.movie_category);
             image = itemView.findViewById(R.id.movie_img);
-            ratingBar = itemView.findViewById(R.id.ratingBar);
+ //           ratingBar = itemView.findViewById(R.id.ratingBar);
 
 
 
