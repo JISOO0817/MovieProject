@@ -5,15 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
+import android.widget.Toast;
 
 
 import com.example.movieproject.adapters.MovieAdapter;
@@ -24,7 +22,6 @@ import com.example.movieproject.utils.Credentials;
 import com.example.movieproject.utils.MovieApi;
 import com.example.movieproject.viewmodels.MovieListViewModel;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +29,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MovieListActivity extends AppCompatActivity {
+public class MovieListActivity extends AppCompatActivity  {
 
 
     //Before we run our app, we need to add the Network Security.
@@ -42,7 +39,7 @@ public class MovieListActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private MovieAdapter adapter;
     private SearchView searchView;
-
+    private List<MovieModel> movieModels;
 
     // ViewModel
     private MovieListViewModel movieListViewModel;
@@ -196,7 +193,7 @@ public class MovieListActivity extends AppCompatActivity {
     private void ConfigureRecyclerView(){
 
         //Live data cant be passed via the constructer
-        adapter = new MovieAdapter(this);
+        adapter = new MovieAdapter(this,movieModels);
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
@@ -222,6 +219,7 @@ public class MovieListActivity extends AppCompatActivity {
 
 
     }
+
 
 }
 

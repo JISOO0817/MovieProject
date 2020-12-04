@@ -19,6 +19,7 @@ public class MovieModel implements Parcelable {
     @SerializedName("id")
     private int movie_id;
     private float vote_average;
+    @SerializedName("overview")
     private String movie_overview;
     private String original_language;
 

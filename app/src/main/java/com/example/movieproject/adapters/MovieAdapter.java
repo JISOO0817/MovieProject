@@ -1,6 +1,7 @@
 package com.example.movieproject.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Movie;
 import android.text.Layout;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.movieproject.MovieDetails;
 import com.example.movieproject.R;
 import com.example.movieproject.models.MovieModel;
 
@@ -25,10 +27,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     private Context context;
     private List<MovieModel> mMovie;
 
-
-    public MovieAdapter(Context context) {
+    public MovieAdapter(Context context, List<MovieModel> mMovie) {
         this.context = context;
-
+        this.mMovie = mMovie;
     }
 
     @NonNull
@@ -36,7 +37,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(context).inflate(R.layout.movie_list_item,parent,false);
-        return new ViewHolder(view);
+       // return new ViewHolder(view);
+       return new ViewHolder(view);
     }
 
     @Override
@@ -48,11 +50,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         String release_date = movieModel.getRelease_date();
         float vote_average = movieModel.getVote_average();
         String poster_path = movieModel.getPoster_path();
-
-  //      holder.title.setText(title);
-   //     holder.runtime.setText(original_language);
-  //      holder.release_date.setText(release_date);
-  //      holder.ratingBar.setRating(vote_average/2);
+        String overView = movieModel.getMovie_overview();
 
 
         Glide.with(holder.itemView.getContext()).load("https://image.tmdb.org/t/p/w500/"+poster_path).into(holder.image);
@@ -60,10 +58,21 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(context,MovieDetails.class);
+               intent.putExtra("overView",overView);
+                intent.putExtra("title",title);
+                intent.putExtra("rating",vote_average);
+                intent.putExtra("poster",poster_path);
 
-                Toast.makeText(context, "이영화는" + title, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "rating:"+vote_average, Toast.LENGTH_SHORT).show();
+                context.startActivity(intent);
+
+
+
+
             }
         });
+
     }
 
     @Override
@@ -79,21 +88,19 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         notifyDataSetChanged();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+
+
+    class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView title, runtime, release_date;
         ImageView image;
         RatingBar ratingBar;
 
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-//            title = itemView.findViewById(R.id.movie_title);
- //           runtime = itemView.findViewById(R.id.movie_duration);
- //           release_date = itemView.findViewById(R.id.movie_category);
-            image = itemView.findViewById(R.id.movie_img);
- //           ratingBar = itemView.findViewById(R.id.ratingBar);
-
+              image = itemView.findViewById(R.id.movie_img);
 
 
         }
