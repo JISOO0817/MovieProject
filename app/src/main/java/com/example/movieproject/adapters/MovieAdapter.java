@@ -27,6 +27,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     private Context context;
     private List<MovieModel> mMovie;
 
+    private static final int DISPLAY_POP = 1;
+    private static final int DISPLAY_SEARCH = 2;
+
     public MovieAdapter(Context context, List<MovieModel> mMovie) {
         this.context = context;
         this.mMovie = mMovie;
@@ -36,9 +39,18 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(context).inflate(R.layout.movie_list_item,parent,false);
-       // return new ViewHolder(view);
-       return new ViewHolder(view);
+        View view = null;
+
+        if(viewType == DISPLAY_SEARCH){
+            view = LayoutInflater.from(context).inflate(R.layout.movie_list_item,parent,false);
+            return new ViewHolder(view);
+        }else{
+            view = LayoutInflater.from(context).inflate(R.layout.movie_list_item,parent,false);
+
+            return new ViewHolder(view);
+
+        }
+
     }
 
     @Override

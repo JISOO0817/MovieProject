@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 
@@ -44,6 +45,8 @@ public class MovieListActivity extends AppCompatActivity  {
     // ViewModel
     private MovieListViewModel movieListViewModel;
 
+    boolean isPopular = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,10 +65,34 @@ public class MovieListActivity extends AppCompatActivity  {
         //Calling the observers
 
         ObserveAnyChange();
+        OnservePopularMovies();
+
+        //Getting popular movies
+        movieListViewModel.searchMoviePop(1);
 
 
 
 
+
+
+    }
+
+    private void OnservePopularMovies() {
+
+        movieListViewModel.getPop().observe(this, new Observer<List<MovieModel>>() {
+            @Override
+            public void onChanged(List<MovieModel> movieModels) {
+                // Observing for any data change
+
+                if(movieModels != null){
+                    for(MovieModel movieModel:movieModels){
+                        // Get the data in log
+                        Log.v("Tag","onChanged:" + movieModel.getTitle());
+                        adapter.setmMovie(movieModels);
+                    }
+                }
+            }
+        });
 
     }
 
@@ -89,6 +116,13 @@ public class MovieListActivity extends AppCompatActivity  {
             @Override
             public boolean onQueryTextChange(String newText) {
                 return false;
+            }
+        });
+
+        searchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isPopular = false;
             }
         });
 
