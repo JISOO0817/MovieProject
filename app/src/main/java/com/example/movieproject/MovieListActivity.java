@@ -65,7 +65,7 @@ public class MovieListActivity extends AppCompatActivity  {
         //Calling the observers
 
         ObserveAnyChange();
-        OnservePopularMovies();
+        ObservePopularMovies();
 
         //Getting popular movies
         movieListViewModel.searchMoviePop(1);
@@ -77,7 +77,7 @@ public class MovieListActivity extends AppCompatActivity  {
 
     }
 
-    private void OnservePopularMovies() {
+    private void ObservePopularMovies() {
 
         movieListViewModel.getPop().observe(this, new Observer<List<MovieModel>>() {
             @Override

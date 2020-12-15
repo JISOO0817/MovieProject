@@ -138,7 +138,7 @@ public class MovieApiClient {
 
                         List<MovieModel> currentMovies = mMovies.getValue();
                         currentMovies.addAll(list);
-                        mMovies.postValue(currentMovies);
+                        mMovies.postValue(currentMovies);  //백그라운드 스레드에서 사용
                     }
                 }else{
                     String error = response.errorBody().string();

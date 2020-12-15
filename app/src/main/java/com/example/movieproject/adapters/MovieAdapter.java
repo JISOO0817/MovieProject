@@ -76,7 +76,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
                 intent.putExtra("rating",vote_average);
                 intent.putExtra("poster",poster_path);
 
-                Toast.makeText(context, "rating:"+vote_average, Toast.LENGTH_SHORT).show();
                 context.startActivity(intent);
 
 
